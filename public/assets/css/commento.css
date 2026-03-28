@@ -1,0 +1,26 @@
+.commento-root-font * {
+	font-family: "Georgia", "serif";
+}
+.commento-root .commento-submit-button{
+	background-color: black;
+	color: #f1c232;
+}
+.commento-root .commento-round-check input[type=checkbox]:checked+label:before {
+	background: #f1c232;
+	border: 1px solid #f1c232;
+}
+.commento-root .commento-anonymous-checkbox-container input[type=checkbox]+label {
+	color: black;
+}
+.commento-root .commento-avatar {
+	display: none;
+}
+.commento-root .commento-card .commento-name {
+	margin-left: 0px;
+}
+.commento-root .commento-card .commento-subtitle {
+	margin-left: 0px;
+}
+.commento-root .commento-sort-policy-buttons-container .commento-sort-policy-buttons .commento-sort-policy-button-selected {
+	color: #f1c232;
+}

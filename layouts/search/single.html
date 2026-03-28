@@ -1,0 +1,54 @@
+{{ define "head_extra" }}
+<title>Emotional Baking Search Results</title>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
+{{ end }}
+{{ define "navbar" }}{{ partial "navbar.html" "" }}{{ end }}
+
+{{ define "main" }}
+<div class="row justify-content-center mt-3 fs-6">
+    <div class="col-12 col-sm-12 col-md-10 col-lg-8">
+        <div id="search-results"></div>
+    </div>
+</div>
+<script>
+(function() {
+    var query = new URLSearchParams(window.location.search).get("query") || "";
+    if (!query) return;
+
+    fetch("/search-index.json")
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            var fuse = new Fuse(data, {
+                keys: [
+                    { name: "emotion", weight: 0.3 },
+                    { name: "title",   weight: 0.2 },
+                    { name: "tags",    weight: 0.2 },
+                    { name: "description", weight: 0.15 },
+                    { name: "ingredients", weight: 0.15 }
+                ],
+                threshold: 0.4,
+                includeScore: true
+            });
+            var results = fuse.search(query);
+            var html = "<h5>Results for <em>" + query + "</em></h5>";
+            if (results.length === 0) {
+                html += "<p>No results found.</p>";
+            } else {
+                html += '<div class="row gx-5 eb-post-list">';
+                results.forEach(function(r) {
+                    var item = r.item;
+                    html += '<div class="mt-4 col-6 col-sm-4 col-md-4 col-lg-3">';
+                    html += '<a href="' + item.permalink + '" class="eb-featured-post fs-7">';
+                    html += '<div class="row"><img loading="lazy" src="/assets/images/posts/' + item.slug + '/featured.jpg"></div>';
+                    html += '<div class="row featured-text text-center"><div>';
+                    html += '<span class="eb-color-main"><strong>' + item.emotion.charAt(0).toUpperCase() + item.emotion.slice(1) + '</strong></span> ';
+                    html += item.opening_title;
+                    html += '</div></div></a></div>';
+                });
+                html += '</div>';
+            }
+            document.getElementById("search-results").innerHTML = html;
+        });
+})();
+</script>
+{{ end }}

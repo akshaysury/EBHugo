@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Stormy on Emotional Baking</title>
+    <link>https://emotionalbaking.com/tags/stormy/</link>
+    <description>Recent content in Stormy on Emotional Baking</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 11 May 2021 05:00:01 +0000</lastBuildDate>
+    <atom:link href="https://emotionalbaking.com/tags/stormy/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Stormy crusty apple bread.</title>
+      <link>https://emotionalbaking.com/posts/stormy-crusty-apple-bread/</link>
+      <pubDate>Tue, 11 May 2021 05:00:01 +0000</pubDate>
+      <guid>https://emotionalbaking.com/posts/stormy-crusty-apple-bread/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

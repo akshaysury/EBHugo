@@ -1,0 +1,122 @@
+{{ define "head_extra" }}
+<title>Emotional Baking</title>
+{{ end }}
+
+{{ define "navbar" }}{{ partial "navbar.html" "Home" }}{{ end }}
+
+{{ define "main" }}
+{{ $featured := .Site.Data.home_featured }}
+{{ $playlists := .Site.Data.playlists }}
+
+{{ if eq $featured.feature_type "playlist" }}
+    {{/* Find the playlist matching the featured item_id */}}
+    {{ $playlist := dict }}
+    {{ range $playlists }}
+        {{ if eq .id $featured.item_id }}{{ $playlist = . }}{{ end }}
+    {{ end }}
+    <div class="row justify-content-center">
+        <div class="col-10 col-sm-10 text-center fs-6">
+            <strong>*NEW* Mood Playlist</strong>
+        </div>
+        <div class="col-10 col-sm-10 text-center fs-5 eb-color-main">
+            <strong>{{ $playlist.title }}</strong>
+        </div>
+        {{ range $playlist.description }}
+        <div class="col-10 col-sm-10 mt-3 mb-2 text-center">{{ . }}</div>
+        {{ end }}
+    </div>
+    <div class="row justify-content-center">
+        {{ range $playlist.post_ids }}
+        {{ $postName := . }}
+        {{ $post := $.Site.GetPage (printf "/posts/%s" $postName) }}
+        {{ if $post }}
+        <div class="col-6 col-sm-6 col-md-4 col-lg-3 mt-3">
+            <a href="/playlists/{{ $playlist.id }}/{{ $postName }}/" class="eb-featured-post fs-7">
+                <div class="row">
+                    <img loading="lazy" src="/assets/images/posts/{{ $postName }}/featured.jpg">
+                </div>
+                <div class="row featured-text text-center">
+                    <div><span class="eb-color-main"><strong>{{ $post.Params.emotion }}</strong></span> {{ $post.Params.opening_title }}</div>
+                </div>
+            </a>
+        </div>
+        {{ end }}
+        {{ end }}
+    </div>
+    <div class="row justify-content-center mt-5">
+        {{ range $playlist.summaries }}
+        <div class="col-10 col-sm-10 text-center">{{ . }}</div>
+        {{ end }}
+    </div>
+{{ else }}
+    {{ $primaryName := index $featured.post_ids 0 }}
+    {{ $primaryPost := $.Site.GetPage (printf "/posts/%s" $primaryName) }}
+    {{ $secondaryName1 := "" }}{{ $secondaryName2 := "" }}
+    {{ $tertiaryName1 := "" }}{{ $tertiaryName2 := "" }}
+    {{ if ge (len $featured.post_ids) 2 }}{{ $secondaryName1 = index $featured.post_ids 1 }}{{ end }}
+    {{ if ge (len $featured.post_ids) 3 }}{{ $secondaryName2 = index $featured.post_ids 2 }}{{ end }}
+    {{ if ge (len $featured.post_ids) 4 }}{{ $tertiaryName1 = index $featured.post_ids 3 }}{{ end }}
+    {{ if ge (len $featured.post_ids) 5 }}{{ $tertiaryName2 = index $featured.post_ids 4 }}{{ end }}
+
+    <div class="row gx-5 mt-3 justify-content-center">
+        <div class="col-xl-5 col-lg-6 col-md-6 col-sm-6 col-10 mt-3 fs-8">
+            {{ if $primaryPost }}
+            <a href="/posts/{{ $primaryName }}/" class="eb-featured-post">
+                <div class="row">
+                    <img loading="lazy" src="/assets/images/posts/{{ $primaryName }}/featured.jpg">
+                </div>
+                <div class="row featured-text text-center fs-8">
+                    {{ $tldr := $primaryPost.Params.tldr_list }}
+                    <div class="eb-color-main"><strong>{{ $primaryPost.Params.emotion | title }}</strong></div>
+                    {{ if ge (len $tldr) 3 }}<div><strong>{{ index $tldr 2 }}</strong></div>{{ end }}
+                    {{ if ge (len $tldr) 4 }}<div>{{ index $tldr 3 }}</div>{{ end }}
+                    {{ if ge (len $tldr) 5 }}<div>{{ index $tldr 4 }}</div>{{ end }}
+                </div>
+            </a>
+            {{ end }}
+        </div>
+        <div class="eb-home-border-between-sections">
+            {{ partial "border.html" . }}
+        </div>
+        <div class="col col-sm-5 mt-3">
+            <div class="row justify-content-center gy-3 fs-8">
+                {{ range slice $secondaryName1 $secondaryName2 $tertiaryName1 $tertiaryName2 }}
+                {{ if . }}
+                {{ $postName := . }}
+                {{ $p := $.Site.GetPage (printf "/posts/%s" $postName) }}
+                {{ if $p }}
+                <a href="/posts/{{ $postName }}/" class="col-lg-6 col-md-6 col-sm-6 col-6 eb-featured-post fs-7">
+                    <div class="row">
+                        <img loading="lazy" src="/assets/images/posts/{{ $postName }}/featured.jpg">
+                    </div>
+                    <div class="row featured-text text-center">
+                        <div><strong><span class="eb-color-main">{{ $p.Params.emotion | title }}</span> {{ index $p.Params.tldr_list 2 }}</strong></div>
+                    </div>
+                </a>
+                {{ end }}
+                {{ end }}
+                {{ end }}
+            </div>
+        </div>
+    </div>
+{{ end }}
+
+{{ partial "border.html" . }}
+<div class="text-center">
+    <div>
+        <div class="col mt-3"><strong><span class="eb-color-main">Emotions</span></strong> and <strong>Baking</strong>. That's why you're here...</div>
+        <div class="col mt-3">Baking, making new recipes and getting lost (or found) in the process is what you'll find in every recipe.</div>
+    </div>
+</div>
+<div class="row mt-3 justify-content-center">
+    <div class="col-3 col-sm-3 text-end"><span class="eb-color-main">TL</span>DR:</div>
+    <div class="col-5 col-sm-4">
+        <ul class="list-unstyled">
+            <li>I'm emotional</li>
+            <li>I'll bake</li>
+            <li>Emotional Baking</li>
+            <li>Feel, Bake, Better</li>
+        </ul>
+    </div>
+</div>
+{{ end }}

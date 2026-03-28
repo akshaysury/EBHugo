@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Weekend on Emotional Baking</title>
+    <link>https://emotionalbaking.com/tags/weekend/</link>
+    <description>Recent content in Weekend on Emotional Baking</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 12 Jan 2021 09:39:00 +0000</lastBuildDate>
+    <atom:link href="https://emotionalbaking.com/tags/weekend/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Weekend chocolate chip peanut butter lime cookies.</title>
+      <link>https://emotionalbaking.com/posts/weekend-chocolate-chip-peanut-butter-lime-cookies/</link>
+      <pubDate>Tue, 12 Jan 2021 09:39:00 +0000</pubDate>
+      <guid>https://emotionalbaking.com/posts/weekend-chocolate-chip-peanut-butter-lime-cookies/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,19 @@
+baseURL = "https://emotionalbaking.com/"
+languageCode = "en-us"
+title = "Emotional Baking"
+[pagination]
+  pagerSize = 20
+
+[params]
+  description = "Feel. Bake. Better."
+  postImageBase = "/assets/images/posts"
+  commonImageBase = "/assets/images/common"
+
+[outputs]
+  home = ["HTML", "JSON"]
+
+[outputFormats.JSON]
+  mediaType = "application/json"
+  baseName = "search-index"
+  isPlainText = true
+  notAlternative = true

@@ -1,0 +1,31 @@
+{{ define "head_extra" }}<title>Emotional Baking Recipes</title>{{ end }}
+{{ define "navbar" }}{{ partial "navbar.html" "Recipes" }}{{ end }}
+
+{{ define "main" }}
+<div class="row gx-5 eb-post-list">
+    {{ range .Paginator.Pages }}
+    <div class="mt-4 col-6 col-sm-4 col-md-4 col-lg-3">
+        <a href="{{ .Permalink }}" class="eb-featured-post fs-7">
+            <div class="row">
+                <img loading="lazy" src="/assets/images/posts/{{ .Params.slug }}/featured.jpg">
+            </div>
+            <div class="row featured-text text-center">
+                <div><span class="eb-color-main"><strong>{{ .Params.emotion | title }}</strong></span> {{ .Params.opening_title }}</div>
+            </div>
+        </a>
+    </div>
+    {{ end }}
+</div>
+<div class="row mt-5 eb-pagination">
+    <div class="col text-start">
+        {{ if .Paginator.HasPrev }}
+        <a href="{{ .Paginator.Prev.URL }}">Newer Posts</a>
+        {{ end }}
+    </div>
+    <div class="col text-end">
+        {{ if .Paginator.HasNext }}
+        <a href="{{ .Paginator.Next.URL }}">Older Posts</a>
+        {{ end }}
+    </div>
+</div>
+{{ end }}
