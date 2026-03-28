@@ -1,0 +1,16 @@
+[
+{{ $pages := where .Site.RegularPages "Section" "jr" }}
+{{ $last := sub (len $pages) 1 }}
+{{ range $i, $p := $pages }}
+{
+  "slug": {{ $p.Params.slug | jsonify }},
+  "permalink": {{ $p.Permalink | jsonify }},
+  "title": {{ $p.Title | jsonify }},
+  "emotion": {{ $p.Params.emotion | jsonify }},
+  "opening_title": {{ $p.Params.opening_title | jsonify }},
+  "description": {{ delimit ($p.Params.description | default slice) " " | jsonify }},
+  "tags": {{ $p.Params.tags | jsonify }},
+  "ingredients": {{ delimit ($p.Params.ingredients | default slice) ", " | jsonify }}
+}{{ if lt $i $last }},{{ end }}
+{{ end }}
+]

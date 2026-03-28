@@ -2,25 +2,19 @@
 <div class="justify-content-center d-print-none eb-nav">
     <ul class="nav nav-pills justify-content-center mt-4">
         <li class="nav-item mb-2">
-            <a class="nav-link {{ if eq $active "Home" }}active{{ end }}" href="/">Home</a>
+            <a class="nav-link {{ if eq $active "Home" }}active{{ end }}" href="/jr/">Home</a>
         </li>
         <li class="nav-item mb-2">
-            <a class="nav-link {{ if eq $active "Recipes" }}active{{ end }}" href="/posts">Recipes</a>
+            <a class="nav-link {{ if eq $active "Recipes" }}active{{ end }}" href="/jr/posts/">Recipes</a>
         </li>
         <li class="nav-item mb-2">
-            <a class="nav-link {{ if eq $active "More" }}active{{ end }}" href="/more">More</a>
+            <a class="nav-link {{ if eq $active "More" }}active{{ end }}" href="/jr/more/">More</a>
         </li>
         <li class="nav-item mb-2">
-            <a class="nav-link {{ if eq $active "About" }}active{{ end }}" href="/about">About</a>
-        </li>
-        <li class="nav-item mb-2">
-            <a class="nav-link {{ if eq $active "Mood Playlists" }}active{{ end }}" href="/playlists">Mood Playlists</a>
-        </li>
-        <li class="nav-item mb-2">
-            <a class="nav-link {{ if eq $active "Store" }}active{{ end }}" href="/store">Store</a>
+            <a class="nav-link {{ if eq $active "About" }}active{{ end }}" href="/jr/about/">About</a>
         </li>
         <li class="nav-item mb-2 border border-dark rounded">
-            <a class="nav-link" href="{{ if hugo.IsServer }}/jr/{{ else }}https://www.emotionalbakingjr.com{{ end }}">EB Jr</a>
+            <a class="nav-link" href="{{ if hugo.IsServer }}/{{ else }}https://www.emotionalbaking.com{{ end }}">EB</a>
         </li>
     </ul>
 </div>
@@ -38,13 +32,13 @@
         searchfield.addEventListener("keyup", function(event) {
             event.preventDefault();
             if (event.keyCode === 13) {
-                document.location.href = "/search/?query=" + searchfield.value;
+                document.location.href = "/jr/search/?query=" + searchfield.value;
             }
         });
     }
     document.getElementsByClassName("eb-btn-search")[0].onclick = function () {
         var searchfield = document.getElementsByClassName("eb-btn-search-query")[0];
-        document.location.href = "/search/?query=" + searchfield.value;
+        document.location.href = "/jr/search/?query=" + searchfield.value;
     };
     document.addEventListener("DOMContentLoaded", function(event) {
         search_keypress();

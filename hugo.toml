@@ -11,6 +11,7 @@ title = "Emotional Baking"
 
 [outputs]
   home = ["HTML", "JSON"]
+  section = ["HTML", "JSON"]
 
 [outputFormats.JSON]
   mediaType = "application/json"
