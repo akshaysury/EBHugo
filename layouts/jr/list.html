@@ -4,52 +4,23 @@
 {{ define "jr_main" }}
 {{ $featured := .Site.Data.jr_home_featured }}
 
-{{ $primaryName := index $featured.post_ids 0 }}
-{{ $primaryPost := $.Site.GetPage (printf "/jr/posts/%s" $primaryName) }}
-{{ $secondaryName1 := "" }}{{ $secondaryName2 := "" }}
-{{ if ge (len $featured.post_ids) 2 }}{{ $secondaryName1 = index $featured.post_ids 1 }}{{ end }}
-{{ if ge (len $featured.post_ids) 3 }}{{ $secondaryName2 = index $featured.post_ids 2 }}{{ end }}
-
-<div class="row gx-5 mt-3 justify-content-center">
-    <div class="col-xl-5 col-lg-6 col-md-6 col-sm-6 col-10 mt-3 fs-8">
-        {{ if $primaryPost }}
-        <a href="/jr/posts/{{ $primaryName }}/" class="eb-featured-post">
+<div class="row gx-5 eb-post-list justify-content-center mt-3">
+    {{ range $featured.post_ids }}
+    {{ $postName := . }}
+    {{ $p := $.Site.GetPage (printf "/jr/posts/%s" $postName) }}
+    {{ if $p }}
+    <div class="mt-4 col-6 col-sm-4 col-md-4 col-lg-3">
+        <a href="/jr/posts/{{ $postName }}/" class="eb-featured-post fs-7">
             <div class="row">
-                <img loading="lazy" src="/assets/images/posts/{{ $primaryName }}/featured.jpg">
+                <img loading="lazy" src="/assets/images/posts/{{ $postName }}/featured.jpg">
             </div>
-            <div class="row featured-text text-center fs-8">
-                {{ $tldr := $primaryPost.Params.tldr_list }}
-                <div class="eb-color-main"><strong>{{ $primaryPost.Params.emotion | title }}</strong></div>
-                {{ if ge (len $tldr) 3 }}<div><strong>{{ index $tldr 2 }}</strong></div>{{ end }}
-                {{ if ge (len $tldr) 4 }}<div>{{ index $tldr 3 }}</div>{{ end }}
-                {{ if ge (len $tldr) 5 }}<div>{{ index $tldr 4 }}</div>{{ end }}
+            <div class="row featured-text text-center">
+                <div><span class="eb-color-main"><strong>{{ $p.Params.emotion | title }}?</strong></span> {{ $p.Params.opening_title }}</div>
             </div>
         </a>
-        {{ end }}
     </div>
-    <div class="eb-home-border-between-sections">
-        {{ partial "border.html" . }}
-    </div>
-    <div class="col col-sm-5 mt-3">
-        <div class="row justify-content-center gy-3 fs-8">
-            {{ range slice $secondaryName1 $secondaryName2 }}
-            {{ if . }}
-            {{ $postName := . }}
-            {{ $p := $.Site.GetPage (printf "/jr/posts/%s" $postName) }}
-            {{ if $p }}
-            <a href="/jr/posts/{{ $postName }}/" class="col-lg-6 col-md-6 col-sm-6 col-6 eb-featured-post fs-7">
-                <div class="row">
-                    <img loading="lazy" src="/assets/images/posts/{{ $postName }}/featured.jpg">
-                </div>
-                <div class="row featured-text text-center">
-                    <div><strong><span class="eb-color-main">{{ $p.Params.emotion | title }}</span> {{ index $p.Params.tldr_list 2 }}</strong></div>
-                </div>
-            </a>
-            {{ end }}
-            {{ end }}
-            {{ end }}
-        </div>
-    </div>
+    {{ end }}
+    {{ end }}
 </div>
 
 {{ partial "border.html" . }}
