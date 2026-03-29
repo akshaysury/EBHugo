@@ -1,27 +1,73 @@
-{{ define "jr_head_extra" }}<title>Emotional Baking Jr. Recipes</title>{{ end }}
-{{ define "jr_navbar" }}{{ partial "jr/navbar.html" "Recipes" }}{{ end }}
+{{ define "jr_head_extra" }}<title>Emotional Baking Jr.</title>{{ end }}
+{{ define "jr_navbar" }}{{ partial "jr/navbar.html" "Home" }}{{ end }}
 
 {{ define "jr_main" }}
-<div class="row gx-5 eb-post-list">
-    {{ range .Paginator.Pages }}
-    <div class="mt-4 col-6 col-sm-4 col-md-4 col-lg-3">
-        <a href="{{ .Permalink }}" class="eb-featured-post fs-7">
+{{ $featured := .Site.Data.jr_home_featured }}
+
+{{ $primaryName := index $featured.post_ids 0 }}
+{{ $primaryPost := $.Site.GetPage (printf "/jr/posts/%s" $primaryName) }}
+{{ $secondaryName1 := "" }}{{ $secondaryName2 := "" }}
+{{ if ge (len $featured.post_ids) 2 }}{{ $secondaryName1 = index $featured.post_ids 1 }}{{ end }}
+{{ if ge (len $featured.post_ids) 3 }}{{ $secondaryName2 = index $featured.post_ids 2 }}{{ end }}
+
+<div class="row gx-5 mt-3 justify-content-center">
+    <div class="col-xl-5 col-lg-6 col-md-6 col-sm-6 col-10 mt-3 fs-8">
+        {{ if $primaryPost }}
+        <a href="/jr/posts/{{ $primaryName }}/" class="eb-featured-post">
             <div class="row">
-                <img loading="lazy" src="/assets/images/posts/{{ .Params.slug }}/featured.jpg">
+                <img loading="lazy" src="/assets/images/posts/{{ $primaryName }}/featured.jpg">
             </div>
-            <div class="row featured-text text-center">
-                <div><span class="eb-color-main"><strong>{{ .Params.emotion | title }}?</strong></span> {{ .Params.opening_title }}</div>
+            <div class="row featured-text text-center fs-8">
+                {{ $tldr := $primaryPost.Params.tldr_list }}
+                <div class="eb-color-main"><strong>{{ $primaryPost.Params.emotion | title }}</strong></div>
+                {{ if ge (len $tldr) 3 }}<div><strong>{{ index $tldr 2 }}</strong></div>{{ end }}
+                {{ if ge (len $tldr) 4 }}<div>{{ index $tldr 3 }}</div>{{ end }}
+                {{ if ge (len $tldr) 5 }}<div>{{ index $tldr 4 }}</div>{{ end }}
             </div>
         </a>
+        {{ end }}
     </div>
-    {{ end }}
+    <div class="eb-home-border-between-sections">
+        {{ partial "border.html" . }}
+    </div>
+    <div class="col col-sm-5 mt-3">
+        <div class="row justify-content-center gy-3 fs-8">
+            {{ range slice $secondaryName1 $secondaryName2 }}
+            {{ if . }}
+            {{ $postName := . }}
+            {{ $p := $.Site.GetPage (printf "/jr/posts/%s" $postName) }}
+            {{ if $p }}
+            <a href="/jr/posts/{{ $postName }}/" class="col-lg-6 col-md-6 col-sm-6 col-6 eb-featured-post fs-7">
+                <div class="row">
+                    <img loading="lazy" src="/assets/images/posts/{{ $postName }}/featured.jpg">
+                </div>
+                <div class="row featured-text text-center">
+                    <div><strong><span class="eb-color-main">{{ $p.Params.emotion | title }}</span> {{ index $p.Params.tldr_list 2 }}</strong></div>
+                </div>
+            </a>
+            {{ end }}
+            {{ end }}
+            {{ end }}
+        </div>
+    </div>
 </div>
-<div class="row mt-5 eb-pagination">
-    <div class="col text-start">
-        {{ if .Paginator.HasPrev }}<a href="{{ .Paginator.Prev.URL }}">Newer Posts</a>{{ end }}
+
+{{ partial "border.html" . }}
+<div class="text-center">
+    <div>
+        <div class="col mt-3"><strong><span class="eb-color-main">Emotions</span></strong> and <strong>Baking</strong>. For the junior baker...</div>
+        <div class="col mt-3">Baking, making new recipes and getting lost (or found) in the process is what you'll find in every recipe.</div>
     </div>
-    <div class="col text-end">
-        {{ if .Paginator.HasNext }}<a href="{{ .Paginator.Next.URL }}">Older Posts</a>{{ end }}
+</div>
+<div class="row mt-3 justify-content-center">
+    <div class="col-3 col-sm-3 text-end"><span class="eb-color-main">TL</span>DR:</div>
+    <div class="col-5 col-sm-4">
+        <ul class="list-unstyled">
+            <li>I'm emotional</li>
+            <li>I'll bake</li>
+            <li>Emotional Baking Jr.</li>
+            <li>Feel, Bake, Better</li>
+        </ul>
     </div>
 </div>
 {{ end }}
