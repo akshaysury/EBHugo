@@ -20,7 +20,7 @@
             <a class="nav-link {{ if eq $active "Store" }}active{{ end }}" href="/store">Store</a>
         </li>
         <li class="nav-item mb-2 border border-dark rounded">
-            <a class="nav-link" href="{{ if hugo.IsServer }}/jr/{{ else }}https://emotionalbakingjr.ca{{ end }}">EB Jr</a>
+            <a class="nav-link" id="eb-jr-link" href="/jr/">EB Jr</a>
         </li>
     </ul>
 </div>
@@ -33,6 +33,15 @@
     </ul>
 </div>
 <script type="text/javascript">
+    (function() {
+        var host = window.location.hostname;
+        var link = document.getElementById('eb-jr-link');
+        if (host === 'emotionalbaking.ca' || host === 'www.emotionalbaking.ca') {
+            link.href = 'https://emotionalbakingjr.ca';
+        } else if (host === 'emotionalbaking.com' || host === 'www.emotionalbaking.com') {
+            link.href = 'https://emotionalbakingjr.com';
+        }
+    })();
     function search_keypress() {
         var searchfield = document.getElementsByClassName("eb-btn-search-query")[0];
         searchfield.addEventListener("keyup", function(event) {
