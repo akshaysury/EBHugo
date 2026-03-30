@@ -10,11 +10,17 @@ title = "Emotional Baking"
   commonImageBase = "/assets/images/common"
 
 [outputs]
-  home = ["HTML", "JSON"]
+  home = ["HTML", "JSON", "HealthJSON"]
   section = ["HTML", "JSON"]
 
 [outputFormats.JSON]
   mediaType = "application/json"
   baseName = "search-index"
+  isPlainText = true
+  notAlternative = true
+
+[outputFormats.HealthJSON]
+  mediaType = "application/json"
+  baseName = "health"
   isPlainText = true
   notAlternative = true
